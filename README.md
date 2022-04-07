@@ -10,6 +10,5 @@
 * Отдельный респект если ваш код будет выводить комментарий по одному слову, прямо в процессе генерёжки - чтобы пользователь не ждал пока вы настругаете абзац целиком.
 
 ## Status
-* Скачать UScomments.csv и USvideos.csv google drive датасет [YouTube comments](https://www.kaggle.com/tanmay111/youtube-comments-sentiment-analysis)
 * Разбить на тест и вал датасет [YouTube comments](https://www.kaggle.com/tanmay111/youtube-comments-sentiment-analysis)
  
