@@ -31,3 +31,5 @@
 ``` CUDA_VISIBLE_DEVICES="1" streamlit run streamlit_core.py ```
 
 Example link: `https://www.youtube.com/watch?v=CUwg_JoNHpo`
+
+![demo](/data/demo.gif)
