@@ -34,7 +34,6 @@ def clear_output_text(text):
 @st.cache(suppress_st_warning=True)
 def load_model():
     model = GPT2LMHeadModel.from_pretrained('finetune')
-    model.cuda()
     return model
 
 @st.cache(suppress_st_warning=True)
@@ -51,9 +50,9 @@ def generate_sequences(
     ):
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     input_ids = tokenizer.encode(prefix, add_special_tokens=False, return_tensors="pt")
-    input_ids = input_ids.cuda()
 
     output_sequences = model.generate(
+        device="cpu",
         input_ids=input_ids,
         max_length=1000,
         do_sample=do_sample,
