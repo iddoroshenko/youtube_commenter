@@ -1,4 +1,6 @@
 import argparse
+import nltk
+nltk.download('punkt')
 from nltk import tokenize
 import streamlit as st
 import string
