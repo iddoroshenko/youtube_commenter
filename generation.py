@@ -33,7 +33,7 @@ def clear_output_text(text):
 
 @st.cache(suppress_st_warning=True)
 def load_model():
-    model = GPT2LMHeadModel.from_pretrained('last_1')
+    model = GPT2LMHeadModel.from_pretrained('finetune')
     model.cuda()
     return model
 
