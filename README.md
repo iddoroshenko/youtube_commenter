@@ -32,4 +32,5 @@
 
 Example link: `https://www.youtube.com/watch?v=CUwg_JoNHpo`
 
-![demo](/data/demo.gif)
+
+<img src="https://github.com/MaximovaIrina/youtube_commenter/blob/main/data/demo.gif" width="450" height="480">
