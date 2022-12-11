@@ -51,28 +51,33 @@ if __name__ == "__main__":
     model = AutoModelForCausalLM.from_pretrained(args.model_name_or_path, from_tf=bool(".ckpt" in args.model_name_or_path))
     model.resize_token_embeddings(len(tokenizer))
 
-    train, test = ds.load_train_test_dataset(comments_path='data/UScomments.csv', 
-                                            videos_path='data/USvideos.csv', 
-                                            split=0.8, 
+    train_new, test_new = ds.load_train_test_dataset(comments_path='data/UScomments.csv',
+                                            videos_path='data/USvideos.csv',
+                                            split=0.8,
                                             remove_extras=False,
                                             to_lower_case=False,
                                             remove_short_words=False,
                                             max_len=256)
-    print("Train:", train)
-    print("Test:", test)
+    #print("Train:", train)
+    #print("Test:", test)
 
-    encoded_train = train.map(tokenize_function, batched=True, remove_columns=["text"]).shuffle(seed=42)
-    encoded_test = test.map(tokenize_function, batched=True, remove_columns=["text"]).shuffle(seed=42)
+    #encoded_train = train_old.map(tokenize_function, batched=True).shuffle(seed=42)
+    #encoded_test = test_old.map(tokenize_function, batched=True).shuffle(seed=42)
 
-    train_dataset = encoded_train.map(group_texts, batched=True)
-    test_dataset = encoded_test.map(group_texts, batched=True)
+    train_new.foreach(tokenize_function)
+    test_new.foreach(tokenize_function)
+
+    #train_dataset = encoded_train.foreach(group_texts, batched=True)
+    #test_dataset = encoded_test.foreach(group_texts, batched=True)
+    #train_new.foreach(group_texts)
+    #test_new.foreach(group_texts)
 
     training_args = TrainingArguments(
         "gpt2-finetuned-ytcomments",
         learning_rate=5e-5,
         weight_decay=0.01,
         push_to_hub=False,
-        evaluation_strategy = "steps",
+        evaluation_strategy="steps",
         logging_dir="logs_1",
         logging_steps=25,
         save_strategy='steps',
@@ -84,12 +89,12 @@ if __name__ == "__main__":
     trainer = Trainer(
         model=model,
         args=training_args,
-        train_dataset=train_dataset,
-        eval_dataset=test_dataset,
+        train_dataset=train_new,
+        eval_dataset=test_new,
     )
 
     trainer.train()
 
     eval_results = trainer.evaluate()
     print(f"Perplexity: {math.exp(eval_results['eval_loss']):.2f}")
-    model.save_pretrained('/home/irina/Documents/unn/youtube_commenter/last_1')
+    model.save_pretrained('/Users/idorosh/hse/krylov/youtube_commenter-main/last_1')
